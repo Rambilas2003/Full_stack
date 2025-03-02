@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /*background: linear-gradient(to right, #ff758c, #ff7eb3);*/
+        }
+        .signup-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(58, 3, 3, 0.2);
+            text-align: center;
+            width: 320px;
+        }
+        .signup-box h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .signup-box input, .signup-box button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #f1f1f1;
+            font-size: 16px;
+        }
+        .signup-box button {
+            background: #9d4852;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .signup-box button:hover {
+            background: #785053;
+        }
+        .signup-box p {
+            margin-top: 10px;
+        }
+        .signup-box a {
+            text-decoration: none;
+            color: #1a52d2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-box">
+        <h2>Sign Up</h2>
+        <form>
+            <input type="text" placeholder="Enter Username" required>
+            <input type="email" placeholder="Enter Email" required>
+            <input type="password" placeholder="Enter Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent page reload
+
+        const username = form.elements[0].value.trim();
+        const email = form.elements[1].value.trim();
+        const password = form.elements[2].value.trim();
+
+        // Basic Validation
+        if (username.length < 3) {
+            alert("Username must be at least 3 characters long.");
+            return;
+        }
+        if (!validateEmail(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters long.");
+            return;
+        }
+
+        // Check if user already exists
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const userExists = users.some(user => user.username === username);
+
+        if (userExists) {
+            alert("Username already exists. Please choose another.");
+            return;
+        }
+
+        // Save user to localStorage
+        users.push({ username, email, password });
+        localStorage.setItem("users", JSON.stringify(users));
+
+        alert("Signup successful! Redirecting to login...");
+        window.location.href = "login.html"; // Redirect to login page
+    });
+
+    // Function to validate email format
+    function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+});
+
+    </script>
+</body>
+</html>

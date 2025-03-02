@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Login Form</title>
+    <link rel="stylesheet">
+    <style>
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            background: #f3f3f3;
+            flex-direction: column;
+            margin: 0;
+        }
+        
+        .main {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            transition: transform 0.2s;
+            width: 500px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #770707;
+        }
+        
+        label {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            text-align: left;
+            color: #555;
+            font-weight: bold;
+        }
+        
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        button {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            background-color: #cb4e65;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+        .wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        </style>
+</head>
+
+<body>
+    <div class="main">
+        <h1>Memories</h1>
+        <h3>Enter your details</h3>
+
+        <form action="user.html" method="get">
+            <label for="first">
+                Username:
+            </label>
+            <input type="text" id="first" name="first" 
+                placeholder="Enter your Username" required>
+
+            <label for="password">
+                Password:
+            </label>
+            <input type="password" id="password" name="password" 
+                placeholder="Enter your Password" required>
+
+            <div class="wrap">
+                <button type="submit">
+                    Submit/login
+                </button>
+            </div>
+        </form>
+        
+        <p>Not registered?
+            <a href="signup.html" style="text-decoration: none;">
+                signup
+            </a>
+        </p>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById("first").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+
+        const validUser = users.find(user => user.username === username && user.password === password);
+
+        if (validUser) {
+            alert("Login successful!");
+            window.location.href = "user.html"; // Redirect to user profile
+        } else {
+            alert("Invalid username or password.");
+        }
+    });
+});
+
+ </script>
+</body>
+
+</html>
